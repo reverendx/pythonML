@@ -1,2 +1,2 @@
 # repoEQ4
-Repositorio Equipo 4
+Repositorio Equipo 3
