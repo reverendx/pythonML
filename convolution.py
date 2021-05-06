@@ -3,7 +3,7 @@
 #Participante: Josemaria Robledo Lara A01612376
 
 
-#Se importan las bibliotecas que se usarán
+#Se importan las bibliotecas necesarias.
 import os
 from scipy import signal, misc
 import matplotlib.pyplot as plt
@@ -16,9 +16,11 @@ Matriz = np.array([[1,1,1,1], [1,1,1,1], [0,0,0,0], [0,0,0,0]])
 Kernel = np.array([[1,1], [-1,-1]])
 Matriz
 
-#Se llama la función de convulción y se pasa la matriz de entrada
-temp = signal.convolve2d(Matriz, Kernel, mode='same')
-#Se mantienen las dimensiones de la imagen de entrada
+#Se hace una operacion de convolucion entre la matriz de 4x4 y el kernel de 2x2
+
+#Se llama la función de convolución y se pasa la matriz de entrada.
+#Funcion de la libreria de scipy 
+temp = signal.convolve2d(Matriz, Kernel, mode='same')   #Gracias al same se mantienen las dimensiones de la imagen de entrada 
 temp
 
 #Función de la convolución para el filtrado de imágenes
@@ -28,28 +30,26 @@ def show_convolve2d(imagen, Kernel):
   plt.ion()
 
   image_list = []
-  for d in range(3):
-    temp = signal.convolve2d(imagen[:,:,d], Kernel, boundary='symm', mode='same')
+  for d in range(3): #El 3 representa cada canal de la imagen.
+    temp = signal.convolve2d(imagen[:,:,d], Kernel, boundary='symm', mode='same') #Imagen del mismo tamaño 
     imagen_list.append(temp)
 
   imagen_filt = np.stack(imagen_list, axis=2)
   imagen_filt[imagen_filt > 255] = 255
   imagen_filt[imagen_filt < 0] = 0
   imagen_filt = imagen_filt.astype('uint8')
-  
-#Primero se muestra la imagen filtrada
+   
   plt.subplot(1,2,1)
-  io.imshow(imagen_filt)
+  io.imshow(imagen_filt) #Se muestra la imagen filtrada
   plt.axis('off')
 
-#Después la imagen original
   plt.subplot(1,2,2)
-  io.imshow(imagen)
+  io.imshow(imagen) #Se muestra la imagen original para futuras comparaciones.
   plt.axis('off')
   
   io.show()
 
-#Se carga una imagen del directorio
-filename = os.path.join('img/', 'prueba.jpg') 
+#Se carga una imagen de prueba del directorio con dimensiones pequeñas
+filename = os.path.join('prueba.jpg') 
 #Se lee la carpeta que contiene la imagen prueba
 imagen = io.imread(filename)
