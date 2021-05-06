@@ -3,7 +3,7 @@
 #Participante: Josemaria Robledo Lara A01612376
 
 
-#Se importa las bibliotecas que se usarán
+#Se importan las bibliotecas que se usarán
 import os
 from scipy import signal, misc
 import matplotlib.pyplot as plt
@@ -48,3 +48,8 @@ def show_convolve2d(imagen, Kernel):
   plt.axis('off')
   
   io.show()
+
+#Se carga una imagen del directorio
+filename = os.path.join('img/', 'prueba.jpg') 
+#Se lee la carpeta que contiene la imagen prueba
+imagen = io.imread(filename)
