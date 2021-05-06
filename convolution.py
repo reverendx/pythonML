@@ -53,3 +53,15 @@ def show_convolve2d(imagen, Kernel):
 filename = os.path.join('prueba.jpg') 
 #Se lee la carpeta que contiene la imagen prueba
 imagen = io.imread(filename)
+
+#Filtro de Enfoque
+k=np.array([0,-1,0],[-1,5,-1],[0,-1,0])
+show_convolve2d(imagen,k)
+k #Se imprime
+
+#Filtro de Desenfoque o Filtro de Media
+tam = 5
+k = np.ones((tam,tam)/(tam**2))
+show_convolve2d(imagen,k)
+k #Se imprime
+#El desenfoque es proporcional al tam
