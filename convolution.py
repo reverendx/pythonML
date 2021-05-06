@@ -24,52 +24,48 @@ temp = signal.convolve2d(Matriz, Kernel, mode='same')   #Gracias al same se mant
 temp
 
 #Función de la convolución para el filtrado de imágenes
-def show_convolve2d(imagen, Kernel):
+def show_convolve2d(imagen, kernel):
+    
+    %matplotlib notebook
+    plt.ion()
+    
+    imagen_list = []
+    for d in range(3): #El 3 representa cada canal de la imagen.
+        temp = signal.convolve2d(imagen[:,:,d] , kernel,  boundary='symm',mode='same') #Imagen del mismo tamaño 
+        imagen_list.append(temp)
 
-  matplotlib
-  plt.ion()
+    imagen_filt = np.stack(imagen_list, axis=2)
+    imagen_filt[imagen_filt > 255] = 255
+    imagen_filt[imagen_filt < 0] = 0
+    imagen_filt = imagen_filt.astype("uint8")
 
-  image_list = []
-  for d in range(3): #El 3 representa cada canal de la imagen.
-    temp = signal.convolve2d(imagen[:,:,d], Kernel, boundary='symm', mode='same') #Imagen del mismo tamaño 
-    imagen_list.append(temp)
+    plt.subplot(1,2,1)
+    io.imshow(imagen_filt) #Se muestra la imagen con el filtro ya aplicado.
+    plt.axis('off')
 
-  imagen_filt = np.stack(imagen_list, axis=2)
-  imagen_filt[imagen_filt > 255] = 255
-  imagen_filt[imagen_filt < 0] = 0
-  imagen_filt = imagen_filt.astype('uint8')
-   
-  plt.subplot(1,2,1)
-  io.imshow(imagen_filt) #Se muestra la imagen filtrada
-  plt.axis('off')
+    plt.subplot(1,2,2)
+    io.imshow(imagen) #Se muestra la imagen original para futuras comparaciones.
+    plt.axis('off')
 
-  plt.subplot(1,2,2)
-  io.imshow(imagen) #Se muestra la imagen original para futuras comparaciones.
-  plt.axis('off')
-  
-  io.show()
+    io.show()
 
 #Se carga una imagen de prueba del directorio con dimensiones pequeñas
-filename = os.path.join('prueba.jpg') 
+filename = os.path.join('repoEQ3/','prueba.jpg') 
 #Se lee la carpeta que contiene la imagen prueba
 imagen = io.imread(filename)
 
 #Filtro de Enfoque
-k=np.array([0,-1,0],[-1,5,-1],[0,-1,0])
+k=np.array([[0,-1,0],[-1,5,-1],[0,-1,0]])
 show_convolve2d(imagen,k)
-k #Se imprime
 
 #Filtro de Desenfoque o Filtro de Media
 tam = 5
-k = np.ones((tam,tam)/(tam**2))
+k = np.ones((tam,tam))/(tam**2)
 show_convolve2d(imagen,k)
-k #Se imprime
-#El desenfoque es proporcional al tamaño
 
 #Suavizado Gaussiano
 tam = 5
 k = signal.gaussian(tam, 1).reshape(-1, 1)@signal.gaussian(tam, 1).reshape(1, -1)
 k = k / np.sum(k)
 show_convolve2d(imagen, k)
-k#Se imprime
-#El desenfoque es proporcional al tamaño
+
