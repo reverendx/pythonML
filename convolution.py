@@ -64,4 +64,12 @@ tam = 5
 k = np.ones((tam,tam)/(tam**2))
 show_convolve2d(imagen,k)
 k #Se imprime
-#El desenfoque es proporcional al tam
+#El desenfoque es proporcional al tamaño
+
+#Suavizado Gaussiano
+tam = 5
+k = signal.gaussian(tam, 1).reshape(-1, 1)@signal.gaussian(tam, 1).reshape(1, -1)
+k = k / np.sum(k)
+show_convolve2d(imagen, k)
+k#Se imprime
+#El desenfoque es proporcional al tamaño
