@@ -1,6 +1,6 @@
 #Equipo 3
 #Lider/Supervisor: Emilio Gallegos A01066813
-#Participante: Josemaria 
+#Participante: Josemaria Robledo Lara A01612376
 
 
 #Se importa las bibliotecas que se usarán
@@ -36,3 +36,15 @@ def show_convolve2d(imagen, Kernel):
   imagen_filt[imagen_filt > 255] = 255
   imagen_filt[imagen_filt < 0] = 0
   imagen_filt = imagen_filt.astype('uint8')
+  
+#Primero se muestra la imagen filtrada
+  plt.subplot(1,2,1)
+  io.imshow(imagen_filt)
+  plt.axis('off')
+
+#Después la imagen original
+  plt.subplot(1,2,2)
+  io.imshow(imagen)
+  plt.axis('off')
+  
+  io.show()
